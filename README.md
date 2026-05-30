@@ -25,6 +25,7 @@ The only file persisted locally is `data/fingerprints.json`, which maps sensor s
 |---|---|
 | ![FT232 adapter](images/ft232_adapter.jpg) | ![Wiring](images/wiring_setup.jpg) |
 | ![Connected to Mac](images/connected_to_mac.jpg) | ![App running](images/app_screenshot.jpg) |
+| ![Full setup](images/full_setup.jpg) | |
 
 ### Wiring
 
