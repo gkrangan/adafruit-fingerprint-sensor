@@ -1,6 +1,6 @@
 # Adafruit Optical Fingerprint Sensor — Python GUI
 
-A desktop Python application for enrolling, identifying, and managing fingerprints using the [Adafruit Optical Fingerprint Sensor](https://www.adafruit.com/product/751) connected to a Mac (or Linux/Windows) via a USB-to-Serial TTL cable.
+A desktop Python application for enrolling, identifying, and managing fingerprints using the [Adafruit Optical Fingerprint Sensor](https://www.adafruit.com/product/751) connected to a Mac (or Linux/Windows) via a USB-to-Serial TTL adapter.
 
 ---
 
@@ -14,21 +14,34 @@ The only file persisted locally is `data/fingerprints.json`, which maps sensor s
 
 ## Hardware
 
-| Component | Link |
-|-----------|------|
-| Adafruit Optical Fingerprint Sensor | [Product #751](https://www.adafruit.com/product/751) |
-| USB to TTL Serial Cable (3.3 V) | [Product #954](https://www.adafruit.com/product/954) |
+| Component | Notes |
+|-----------|-------|
+| [Adafruit Optical Fingerprint Sensor](https://www.adafruit.com/product/751) | Product #751 |
+| FT232 (FTDI) USB to Serial Adapter | Inland FT232RL or equivalent — **voltage switch must be set to 3.3 V** |
+
+### Setup photos
+
+| | |
+|---|---|
+| ![FT232 adapter](images/ft232_adapter.jpg) | ![Wiring](images/wiring_setup.jpg) |
+| ![Connected to Mac](images/connected_to_mac.jpg) | ![App running](images/app_screenshot.jpg) |
 
 ### Wiring
 
-| Sensor pin | TTL Cable wire |
-|------------|----------------|
-| VCC (3.3 V) | Red (3.3 V only — do **not** use 5 V) |
-| GND | Black |
-| TX | White (RX on cable) |
-| RX | Green (TX on cable) |
+The FT232RL adapter has a 6-pin header. Wire it to the fingerprint sensor as follows:
+
+| Sensor pin | FT232 header pin | Wire colour (typical) |
+|------------|------------------|-----------------------|
+| VCC | VCC | Red |
+| GND | GND | Black |
+| TX | RX | White |
+| RX | TX | Green |
+
+> **Important:** Set the voltage switch on the FT232 adapter to **3.3 V** before connecting. The fingerprint sensor operates at 3.3 V logic — using 5 V may damage it.
 
 The sensor communicates at **57600 baud** by default.
+
+On macOS, the adapter enumerates as `/dev/tty.usbserial-*` (FTDI driver). The app auto-detects it in the port dropdown.
 
 ---
 
@@ -70,8 +83,6 @@ source .venv/bin/activate
 python3 main.py
 ```
 
-On macOS the USB-Serial port appears as `/dev/tty.usbserial-*`. The app auto-detects it in the port dropdown.
-
 ---
 
 ## Features
@@ -94,6 +105,7 @@ adafruit-fingerprint-sensor/
 ├── app.py           # customtkinter GUI
 ├── sensor.py        # FingerprintSensor — wraps adafruit_fingerprint library
 ├── storage.py       # Maps sensor slot IDs to user-assigned names (JSON)
+├── images/          # Hardware and setup photos
 ├── data/
 │   └── .gitkeep     # fingerprints.json written here at runtime (gitignored)
 └── requirements.txt
